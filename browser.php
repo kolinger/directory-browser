@@ -90,7 +90,7 @@ $sort = $_GET['O'] === 'A' ? 'D' : 'A';
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 		<style>
 			body {
-				padding: 30px;
+				padding: 30px 100px;
 				font-family: 'Trebuchet MS', Helvetica, sans-serif;
 			}
 
