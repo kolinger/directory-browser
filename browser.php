@@ -12,10 +12,10 @@ if (!isset($_GET['O'])) {
 }
 $parameters = '?C=' . $_GET['C'] . '&O=' . $_GET['O'];
 
-session_start();
-if (isset($_GET['username']) && isset($_GET['password'])) {
-	$file = __DIR__ . '/.htpasswd';
-	if (file_exists($file)) {
+$file = __DIR__ . '/.htpasswd';
+if (file_exists($file)) {
+	session_start();
+	if (isset($_GET['username']) && isset($_GET['password'])) {
 		$contents = file_get_contents($file);
 		$lines = explode("\n", $contents);
 		foreach ($lines as $line) {
@@ -32,26 +32,13 @@ if (isset($_GET['username']) && isset($_GET['password'])) {
 			}
 		}
 	}
-}
 
-if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== 'yop') {
-	header('HTTP/1.0 403 Forbidden', TRUE, 403);
-	echo <<<"ERROR"
-<html>
-<head><title>403 Forbidden</title></head>
-<body bgcolor="white">
-<center><h1>403 Forbidden</h1></center>
-<hr><center>{$_SERVER['SERVER_SOFTWARE']}</center>
-</body>
-</html>
-<!-- a padding to disable MSIE and Chrome friendly error page -->
-<!-- a padding to disable MSIE and Chrome friendly error page -->
-<!-- a padding to disable MSIE and Chrome friendly error page -->
-<!-- a padding to disable MSIE and Chrome friendly error page -->
-<!-- a padding to disable MSIE and Chrome friendly error page -->
-<!-- a padding to disable MSIE and Chrome friendly error page -->
-ERROR;
-	exit;
+	if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== 'yop') {
+		header('HTTP/1.0 403 Forbidden', TRUE, 403);
+		echo '<html><head><title>403 Forbidden</title></head><body bgcolor="white"><center><h1>403 Forbidden</h1>' .
+			'</center><hr><center>' . $_SERVER['SERVER_SOFTWARE'] . '</center></body></html>';
+		exit;
+	}
 }
 
 $sizeFormat = function ($bytes) {
