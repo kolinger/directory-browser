@@ -145,6 +145,7 @@ if ($authenticated) {
 			body {
 				padding: 30px 100px;
 				font-family: 'Trebuchet MS', Helvetica, sans-serif;
+				font-size: 16px;
 			}
 
 			table {
@@ -164,6 +165,7 @@ if ($authenticated) {
 
 			table th {
 				text-align: left;
+				white-space: nowrap;
 			}
 
 			table td {
@@ -224,6 +226,25 @@ if ($authenticated) {
 				border: 1px solid #ebccd1;
 				color: #a94442;
 			}
+
+			.break {
+				word-break: break-all;
+			}
+
+			.no-break {
+				white-space: nowrap;
+			}
+
+			@media (max-width: 900px) {
+				body {
+					padding: 0;
+					font-size: 14px;
+				}
+
+				.login {
+					width: 100%;
+				}
+			}
 		</style>
 	</head>
 	<body>
@@ -253,10 +274,10 @@ if ($authenticated) {
 									<?php else: ?>
 										<span class="fa fa-file-o fa-fw"></span>
 									<?php endif ?>
-									<?php echo $item['name'] ?>
+									<span class="break"><?php echo $item['name'] ?></span>
 								</a>
 							</td>
-							<td>
+							<td class="no-break">
 								<a href="<?php echo $item['link'] ?>">
 									<?php if ($item['size'] >= 0): ?>
 										<?php echo $sizeFormat($item['size']) ?>
