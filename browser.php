@@ -96,8 +96,16 @@ if ($authenticated) {
 		return $string;
 	};
 
-	$directory = dirname($_SERVER['REQUEST_URI']);
-	$path = realpath($root . $directory);
+	$directory = preg_replace('~\?.*~', '', $_SERVER['REQUEST_URI']);
+	$path = $root . $directory;
+	if (!file_exists($path) || !is_dir($path)) {
+		$title = 'not found';
+		http_response_code(404);
+		echo '<center><h1>404 Not Found</h1></center>';
+		exit(1);
+	}
+
+	$path = realpath($path);
 	if (strpos($path, $root) !== 0) {
 		$directory = '/';
 		$path = $root;
